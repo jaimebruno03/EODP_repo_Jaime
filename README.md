@@ -1,1 +1,2 @@
-# EODP_repo_Jaime
+# eodp
+EODP main repository
