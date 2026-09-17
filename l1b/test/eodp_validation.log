@@ -1,0 +1,36 @@
+2026-09-17 18:42:14,460 [INFO] Starting EODP validation run.
+2026-09-17 18:42:14,460 [INFO] Log will be saved at: C:\GitHub\EODP_repo_Jaime\l1b\test\eodp_validation.log
+2026-09-17 18:42:14,461 [INFO] Evaluating 8 NetCDF file(s)...
+2026-09-17 18:42:14,461 [INFO] =================================================================
+2026-09-17 18:42:14,462 [INFO] File: l1b_toa_eq_VNIR-0.nc
+2026-09-17 18:42:14,474 [INFO]   [PASSED] [toa] Match (Max diff: 0.00e+00)
+2026-09-17 18:42:14,475 [INFO]   STATUS: IDENTICAL (MATCH)
+2026-09-17 18:42:14,475 [INFO] =================================================================
+2026-09-17 18:42:14,514 [INFO] File: l1b_toa_eq_VNIR-1.nc
+2026-09-17 18:42:14,522 [INFO]   [PASSED] [toa] Match (Max diff: 0.00e+00)
+2026-09-17 18:42:14,522 [INFO]   STATUS: IDENTICAL (MATCH)
+2026-09-17 18:42:14,523 [INFO] =================================================================
+2026-09-17 18:42:14,523 [INFO] File: l1b_toa_eq_VNIR-2.nc
+2026-09-17 18:42:14,534 [INFO]   [PASSED] [toa] Match (Max diff: 0.00e+00)
+2026-09-17 18:42:14,534 [INFO]   STATUS: IDENTICAL (MATCH)
+2026-09-17 18:42:14,535 [INFO] =================================================================
+2026-09-17 18:42:14,535 [INFO] File: l1b_toa_eq_VNIR-3.nc
+2026-09-17 18:42:14,548 [INFO]   [PASSED] [toa] Match (Max diff: 0.00e+00)
+2026-09-17 18:42:14,548 [INFO]   STATUS: IDENTICAL (MATCH)
+2026-09-17 18:42:14,549 [INFO] =================================================================
+2026-09-17 18:42:14,550 [INFO] File: l1b_toa_VNIR-0.nc
+2026-09-17 18:42:14,559 [INFO]   [PASSED] [toa] Match (Max diff: 0.00e+00)
+2026-09-17 18:42:14,560 [INFO]   STATUS: IDENTICAL (MATCH)
+2026-09-17 18:42:14,560 [INFO] =================================================================
+2026-09-17 18:42:14,560 [INFO] File: l1b_toa_VNIR-1.nc
+2026-09-17 18:42:14,569 [INFO]   [PASSED] [toa] Match (Max diff: 0.00e+00)
+2026-09-17 18:42:14,570 [INFO]   STATUS: IDENTICAL (MATCH)
+2026-09-17 18:42:14,570 [INFO] =================================================================
+2026-09-17 18:42:14,570 [INFO] File: l1b_toa_VNIR-2.nc
+2026-09-17 18:42:14,581 [INFO]   [PASSED] [toa] Match (Max diff: 0.00e+00)
+2026-09-17 18:42:14,581 [INFO]   STATUS: IDENTICAL (MATCH)
+2026-09-17 18:42:14,582 [INFO] =================================================================
+2026-09-17 18:42:14,582 [INFO] File: l1b_toa_VNIR-3.nc
+2026-09-17 18:42:14,598 [INFO]   [PASSED] [toa] Match (Max diff: 0.00e+00)
+2026-09-17 18:42:14,598 [INFO]   STATUS: IDENTICAL (MATCH)
+2026-09-17 18:42:15,849 [INFO] Plot saved successfully at: C:\GitHub\EODP_repo_Jaime\l1b\test\equalization_plot.png
