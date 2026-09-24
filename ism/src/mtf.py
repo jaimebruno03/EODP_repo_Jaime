@@ -192,6 +192,15 @@ class mtf:
         :return: Smearing MTF
         """
         #TODO
+        Hsmear_1d = np.sinc(ksmear * fnAlt)
+
+        if Hsmear_1d.ndim == 1:
+            Hsmear = np.tile(Hsmear_1d[:, np.newaxis], (1, ncolumns))
+        elif Hsmear_1d.shape[1] == 1:
+            Hsmear = np.tile(Hsmear_1d, (1, ncolumns))
+        else:
+            Hsmear = Hsmear_1d
+
         return Hsmear
 
     def mtfMotion(self, fn2D, kmotion):
@@ -202,6 +211,8 @@ class mtf:
         :return: detector MTF
         """
         #TODO
+        Hmotion = np.sinc(kmotion * fn2D)
+
         return Hmotion
 
     def plotMtf(self,Hdiff, Hdefoc, Hwfe, Hdet, Hsmear, Hmotion, Hsys, nlines, ncolumns, fnAct, fnAlt, directory, band):
