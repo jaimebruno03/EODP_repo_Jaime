@@ -1,5 +1,6 @@
 from math import pi
 from config.ismConfig import ismConfig
+from pathlib import Path
 import numpy as np
 import math
 import matplotlib.pyplot as plt
@@ -69,7 +70,7 @@ class mtf:
 
         # Calculate the System MTF
         self.logger.debug("Calculation of the Sysmtem MTF by multiplying the different contributors")
-        Hsys = 1 # dummy
+        Hsys = Hsys = Hdiff * Hwfe * Hdefoc * Hdet * Hsmear * Hmotion # dummy
 
         # Plot cuts ACT/ALT of the MTF
         self.plotMtf(Hdiff, Hdefoc, Hwfe, Hdet, Hsmear, Hmotion, Hsys, nlines, ncolumns, fnAct, fnAlt, directory, band)
@@ -234,5 +235,69 @@ class mtf:
         :return: N/A
         """
         #TODO
+        output_dir = Path(directory)
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        mid_alt = nlines // 2
+        mid_act = ncolumns // 2
+
+        freq_act = fnAct[mid_alt, :] if fnAct.ndim == 2 else fnAct
+        freq_alt = fnAlt[:, mid_act] if fnAlt.ndim == 2 else fnAlt
+
+        # --- 1. Slice ACT ---
+        mask_act = (freq_act >= 0) & (freq_act <= 0.50001)
+        sort_idx_act = np.argsort(freq_act[mask_act])
+        x_act = freq_act[mask_act][sort_idx_act]
+
+        plt.figure(figsize=(10, 5.8))
+        plt.plot(x_act, (Hdiff[mid_alt, :][mask_act])[sort_idx_act], label="Diffraction MTF", linewidth=1.2)
+        plt.plot(x_act, (Hdefoc[mid_alt, :][mask_act])[sort_idx_act], label="Defocus MTF", linewidth=1.2)
+        plt.plot(x_act, (Hwfe[mid_alt, :][mask_act])[sort_idx_act], label="WFE Aberrations MTF", linewidth=1.2)
+        plt.plot(x_act, (Hdet[mid_alt, :][mask_act])[sort_idx_act], label="Detector MTF", linewidth=1.2)
+        plt.plot(x_act, (Hsmear[mid_alt, :][mask_act])[sort_idx_act], label="Smearing MTF", linewidth=1.2)
+        plt.plot(x_act, (Hmotion[mid_alt, :][mask_act])[sort_idx_act], label="Motion blur MTF", linewidth=1.2)
+        plt.plot(x_act, (Hsys[mid_alt, :][mask_act])[sort_idx_act], label="System MTF", color="black", linewidth=2.5)
+
+        plt.axvline(x=0.5, color="black", linestyle="--", linewidth=2.0, label="f Nyquist")
+
+        plt.title("System MTF - slice ACT", fontsize=13)
+        plt.xlabel("Spatial frequencies f/(1/w) [-]", fontsize=11)
+        plt.ylabel("MTF", fontsize=11)
+        plt.grid(True, which="both", color="gray", linestyle="-", linewidth=0.5)
+        plt.xlim(-0.02, 0.52)
+        plt.ylim(-0.05, 1.05)
+        plt.legend(loc="lower left", fontsize=8, framealpha=0.9)
+        plt.tight_layout()
+
+        plt.savefig(output_dir / f"system_mtf_act_{band}.png", dpi=300, bbox_inches="tight")
+        plt.show()
+
+        # --- 2. Slice ALT ---
+        mask_alt = (freq_alt >= 0) & (freq_alt <= 0.50001)
+        sort_idx_alt = np.argsort(freq_alt[mask_alt])
+        x_alt = freq_alt[mask_alt][sort_idx_alt]
+
+        plt.figure(figsize=(10, 5.8))
+        plt.plot(x_alt, (Hdiff[:, mid_act][mask_alt])[sort_idx_alt], label="Diffraction MTF", linewidth=1.2)
+        plt.plot(x_alt, (Hdefoc[:, mid_act][mask_alt])[sort_idx_alt], label="Defocus MTF", linewidth=1.2)
+        plt.plot(x_alt, (Hwfe[:, mid_act][mask_alt])[sort_idx_alt], label="WFE Aberrations MTF", linewidth=1.2)
+        plt.plot(x_alt, (Hdet[:, mid_act][mask_alt])[sort_idx_alt], label="Detector MTF", linewidth=1.2)
+        plt.plot(x_alt, (Hsmear[:, mid_act][mask_alt])[sort_idx_alt], label="Smearing MTF", linewidth=1.2)
+        plt.plot(x_alt, (Hmotion[:, mid_act][mask_alt])[sort_idx_alt], label="Motion blur MTF", linewidth=1.2)
+        plt.plot(x_alt, (Hsys[:, mid_act][mask_alt])[sort_idx_alt], label="System MTF", color="black", linewidth=2.5)
+
+        plt.axvline(x=0.5, color="black", linestyle="--", linewidth=2.0, label="f Nyquist")
+
+        plt.title("System MTF - slice ALT", fontsize=13)
+        plt.xlabel("Spatial frequencies f/(1/w) [-]", fontsize=11)
+        plt.ylabel("MTF", fontsize=11)
+        plt.grid(True, which="both", color="gray", linestyle="-", linewidth=0.5)
+        plt.xlim(-0.02, 0.52)
+        plt.ylim(-0.05, 1.05)
+        plt.legend(loc="lower left", fontsize=8, framealpha=0.9)
+        plt.tight_layout()
+
+        plt.savefig(output_dir / f"system_mtf_alt_{band}.png", dpi=300, bbox_inches="tight")
+        plt.show()
 
 
