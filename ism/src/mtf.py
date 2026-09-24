@@ -179,6 +179,8 @@ class mtf:
         :return: detector MTF
         """
         #TODO
+        Hdet = np.abs(np.sinc(fn2D))
+
         return Hdet
 
     def mtfSmearing(self, fnAlt, ncolumns, ksmear):
