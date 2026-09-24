@@ -119,6 +119,15 @@ class mtf:
         :return: diffraction MTF
         """
         #TODO
+
+        Hdiff = np.zeros_like(fr2D, dtype=float)
+
+        r = np.abs(fr2D)
+        mask = r < 1.0
+        r_valid = r[mask]
+
+        Hdiff[mask] = (2.0 / np.pi) * (np.arccos(r_valid) - r_valid * np.sqrt(1.0 - r_valid ** 2))
+
         return Hdiff
 
 
@@ -132,6 +141,16 @@ class mtf:
         :return: Defocus MTF
         """
         #TODO
+        xi_r = np.abs(fr2D)
+
+        x = np.pi * defocus * xi_r * (1.0 - xi_r)
+
+        j1 = (x / 2.0) - (x ** 3 / 16.0) + (x ** 5 / 384.0) - (x ** 7 / 18432.0)
+
+        # For avoiding 0/0 when x = 0:
+        with np.errstate(divide="ignore", invalid="ignore"):
+            Hdefoc = np.where(x != 0, 2.0 * j1 / x, 1.0)
+
         return Hdefoc
 
     def mtfWfeAberrations(self, fr2D, lambd, kLF, wLF, kHF, wHF):
@@ -146,6 +165,11 @@ class mtf:
         :return: WFE Aberrations MTF
         """
         #TODO
+        xi_r = np.abs(fr2D)
+
+        wfe_term = kLF * (wLF / lambd) ** 2 + kHF * (wHF / lambd) ** 2
+        Hwfe = np.exp(-xi_r * (1.0 - xi_r) * wfe_term)
+
         return Hwfe
 
     def mtfDetector(self,fn2D):
