@@ -100,8 +100,15 @@ class mtf:
         fAlt = np.arange(-1 / (2 * w), 1 / (2 * w) - eps, fstepAlt)
         fAct = np.arange(-1 / (2 * w), 1 / (2 * w) - eps, fstepAct)
 
-        [fnAltxx, fnActxx] = np.meshgrid(fnAlt, fnAct, indexing='ij')  
-        fn2D = np.sqrt(fnAltxx * fnAltxx + fnActxx * fnActxx)
+        [fnAltxx, fnActxx] = np.meshgrid(fAlt, fAct, indexing='ij')
+        f2D = np.sqrt(fnAltxx * fnAltxx + fnActxx * fnActxx)
+
+        fc = D/(lambd * focal)
+
+        fn2D = f2D / (1/w)
+        fr2D = f2D / (fc)
+        fnAct = fAct / (1/w)
+        fnAlt = fAlt / (1/w)
 
         return fn2D, fr2D, fnAct, fnAlt
 
