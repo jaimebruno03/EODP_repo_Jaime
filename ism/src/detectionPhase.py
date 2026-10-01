@@ -139,6 +139,8 @@ class detectionPhase(initIsm):
         :return: toa in e- including bad & dead pixels
         """
         #TODO
+
+        toa[:,5] = toa[:,5]*(1-bad_pix_red)
         return toa
 
     def prnu(self, toa, kprnu):
@@ -167,7 +169,6 @@ class detectionPhase(initIsm):
         :return: TOA in [e-] with dark signal
         """
         #TODO
-        # TODO
         sd = ds_A_coeff * ((T / Tref) ** 3) * np.exp(-ds_B_coeff * ((1.0 / T) - (1.0 / Tref)))
         n_act = toa.shape[1]
         dsnu_act = np.abs(np.random.normal(loc=0.0, scale=1.0, size=n_act)) * kdsnu

@@ -270,7 +270,6 @@ class mtf:
         plt.tight_layout()
 
         plt.savefig(output_dir / f"system_mtf_act_{band}.png", dpi=300, bbox_inches="tight")
-        plt.show()
 
         # --- 2. Slice ALT ---
         mask_alt = (freq_alt >= 0) & (freq_alt <= 0.50001)
@@ -298,6 +297,5 @@ class mtf:
         plt.tight_layout()
 
         plt.savefig(output_dir / f"system_mtf_alt_{band}.png", dpi=300, bbox_inches="tight")
-        plt.show()
 
 
