@@ -120,11 +120,8 @@ class detectionPhase(initIsm):
         """
         #TODO
         toae = QE * toa
-        if np.any(toae >= self.ismConfig.FWC):
-            self.logger.warning(
-                f"Electrons exceed Full Well Capacity (FWC = {self.ismConfig.FWC} e-): "
-                f"max = {np.nanmax(toae):.2f} e-"
-            )
+
+        toae = np.clip(toae, 0.0, self.ismConfig.FWC)
 
         return toae
 
