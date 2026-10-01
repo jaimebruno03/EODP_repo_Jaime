@@ -105,6 +105,10 @@ class detectionPhase(initIsm):
         :return: Toa in photons
         """
         #TODO
+        e_photon = (self.constants.h_planck * self.constants.speed_light) / wv
+        energy_pix = (toa * 1e-3) * area_pix * tint
+        toa_ph = energy_pix / e_photon
+
         return toa_ph
 
     def phot2Electr(self, toa, QE):
@@ -115,6 +119,13 @@ class detectionPhase(initIsm):
         :return: toa in electrons
         """
         #TODO
+        toae = QE * toa
+        if np.any(toae >= self.ismConfig.FWC):
+            self.logger.warning(
+                f"Electrons exceed Full Well Capacity (FWC = {self.ismConfig.FWC} e-): "
+                f"max = {np.nanmax(toae):.2f} e-"
+            )
+
         return toae
 
     def badDeadPixels(self, toa,bad_pix,dead_pix,bad_pix_red,dead_pix_red):
@@ -138,6 +149,9 @@ class detectionPhase(initIsm):
         :return: TOA after adding PRNU [e-]
         """
         #TODO
+        n_act = toa.shape[1]
+        prnu_act = np.random.normal(loc=0.0, scale=1.0, size=n_act) * kprnu
+        toa = toa * (1.0 + prnu_act)
         return toa
 
 
@@ -153,4 +167,13 @@ class detectionPhase(initIsm):
         :return: TOA in [e-] with dark signal
         """
         #TODO
+        # TODO
+        sd = ds_A_coeff * ((T / Tref) ** 3) * np.exp(-ds_B_coeff * ((1.0 / T) - (1.0 / Tref)))
+        n_act = toa.shape[1]
+        dsnu_act = np.abs(np.random.normal(loc=0.0, scale=1.0, size=n_act)) * kdsnu
+        ds_act = sd * (1.0 + dsnu_act)
+        toa = toa + ds_act
+
+        return toa
+
         return toa
