@@ -106,6 +106,13 @@ class opticalPhase(initIsm):
         :return: TOA image in irradiances [mW/m2]
         """
         # TODO
+        GE = fft2(toa)
+        Hsys_shifted = fftshift(Hsys)
+        GE_filtered = GE * Hsys_shifted
+        toa_complex = np.fft.ifft2(GE_filtered)
+
+        toa_ft = np.real(toa_complex)
+
         return toa_ft
 
     def spectralIntegration(self, sgm_toa, sgm_wv, band):
